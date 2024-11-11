@@ -26,11 +26,11 @@ class DashboardScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Performance Dashboard'),
+        title: const Text('Performance Dashboard'),
         automaticallyImplyLeading: false,
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -38,18 +38,18 @@ class DashboardScreen extends StatelessWidget {
             Card(
               elevation: 4,
               child: Padding(
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       'Quiz Summary',
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     _buildSummaryRow('Total Questions', totalQuestions),
                     _buildSummaryRow('Answered Questions', answeredQuestions),
                     _buildSummaryRow('Correct Answers', correctAnswers),
@@ -60,24 +60,24 @@ class DashboardScreen extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
             // Performance Chart
             Card(
               elevation: 4,
               child: Padding(
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       'Performance Chart',
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     Container(
                       height: 300,
                       child: PieChart(
@@ -88,7 +88,7 @@ class DashboardScreen extends StatelessWidget {
                               value: correctAnswers.toDouble(),
                               title: 'Correct',
                               radius: 100,
-                              titleStyle: TextStyle(
+                              titleStyle: const TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -99,7 +99,7 @@ class DashboardScreen extends StatelessWidget {
                                   .toDouble(),
                               title: 'Incorrect',
                               radius: 100,
-                              titleStyle: TextStyle(
+                              titleStyle: const TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -109,7 +109,7 @@ class DashboardScreen extends StatelessWidget {
                               value: skippedQuestions.toDouble(),
                               title: 'Skipped',
                               radius: 100,
-                              titleStyle: TextStyle(
+                              titleStyle: const TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -124,7 +124,7 @@ class DashboardScreen extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
             // Action Buttons
             Row(
@@ -150,7 +150,7 @@ class DashboardScreen extends StatelessWidget {
                   onTap: () {
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => LoginScreen()),
+                      MaterialPageRoute(builder: (context) => const LoginScreen()),
                     );
                   },
                   buttonColor: Colors.red, // Red color for exit
@@ -167,17 +167,17 @@ class DashboardScreen extends StatelessWidget {
 
   Widget _buildSummaryRow(String label, dynamic value) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 8),
+      padding: const EdgeInsets.symmetric(vertical: 8),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
             label,
-            style: TextStyle(fontSize: 16),
+            style: const TextStyle(fontSize: 16),
           ),
           Text(
             value.toString(),
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold,
               color: Colors.blue,
