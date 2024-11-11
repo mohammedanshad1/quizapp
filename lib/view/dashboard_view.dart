@@ -131,18 +131,18 @@ class DashboardScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 // Retry Quiz Button (Green)
-                CustomButton(
-                  buttonName: 'Retry Quiz',
-                  onTap: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => QuizScreen()),
-                    );
-                  },
-                  buttonColor: Colors.green, // Green color for retry
-                  height: 50, // Adjust height as needed
-                  width: 150, // Adjust width as needed
-                ),
+                // CustomButton(
+                //   buttonName: 'Retry Quiz',
+                //   onTap: () {
+                //     Navigator.pushReplacement(
+                //       context,
+                //       MaterialPageRoute(builder: (context) => QuizScreen()),
+                //     );
+                //   },
+                //   buttonColor: Colors.green, // Green color for retry
+                //   height: 50, // Adjust height as needed
+                //   width: 150, // Adjust width as needed
+                // ),
 
                 // Exit Button (Red)
                 CustomButton(
@@ -150,7 +150,8 @@ class DashboardScreen extends StatelessWidget {
                   onTap: () {
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => const LoginScreen()),
+                      MaterialPageRoute(
+                          builder: (context) => const LoginScreen()),
                     );
                   },
                   buttonColor: Colors.red, // Red color for exit
