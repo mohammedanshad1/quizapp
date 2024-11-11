@@ -1,9 +1,10 @@
-// lib/screens/quiz_screen.dart
 import 'package:flutter/material.dart';
-import 'dart:async';
-
-import 'package:quizapp/model/question_model.dart';
+import 'package:flutter_icon_snackbar/flutter_icon_snackbar.dart';
 import 'package:quizapp/view/dashboard_view.dart';
+import 'package:quizapp/widgets/custom_button.dart';
+import 'package:quizapp/widgets/custom_snackabr.dart';
+import 'dart:async';
+import 'package:quizapp/model/question_model.dart';
 
 class QuizScreen extends StatefulWidget {
   @override
@@ -78,13 +79,25 @@ class _QuizScreenState extends State<QuizScreen> {
   }
 
   void submitAnswer() {
-    if (currentQuestionIndex < questions.length - 1) {
-      setState(() {
-        currentQuestionIndex++;
-        timeLeft = 30;
-      });
+    // Check if the user has selected an answer
+    if (questions[currentQuestionIndex].selectedAnswer == null) {
+      // Show validation message (Snackbar)
+      CustomSnackBar.show(
+        context,
+        snackBarType: SnackBarType.fail,
+        label: 'Please select an answer before submitting.',
+        bgColor: Colors.red,
+      );
     } else {
-      showResults();
+      // Proceed to the next question or show results
+      if (currentQuestionIndex < questions.length - 1) {
+        setState(() {
+          currentQuestionIndex++;
+          timeLeft = 30;
+        });
+      } else {
+        showResults();
+      }
     }
   }
 
@@ -102,6 +115,12 @@ class _QuizScreenState extends State<QuizScreen> {
 
   void showResults() {
     timer.cancel();
+    CustomSnackBar.show(
+      context,
+      snackBarType: SnackBarType.success,
+      label: 'Quiz Completed Successfully!',
+      bgColor: Colors.green,
+    );
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
@@ -198,39 +217,33 @@ class _QuizScreenState extends State<QuizScreen> {
               ),
             ),
 
-            // Buttons
+            // Buttons Row
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                ElevatedButton(
-                  onPressed: () => skipQuestion(),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.grey,
-                    padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                Expanded(
+                  child: CustomButton(
+                    buttonName: 'Skip',
+                    onTap: skipQuestion,
+                    buttonColor: Colors.red,
+                    height: 50,
+                    width: double.infinity,
                   ),
-                  child: Text('Skip'),
                 ),
-                ElevatedButton(
-                  onPressed: currentQuestion.selectedAnswer != null
-                      ? submitAnswer
-                      : null,
-                  style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                SizedBox(width: 16),
+                Expanded(
+                  child: CustomButton(
+                    buttonName: 'Submit Answer',
+                    onTap: submitAnswer,
+                    buttonColor: Colors.green,
+                    height: 50,
+                    width: double.infinity,
                   ),
-                  child: Text('Submit'),
                 ),
               ],
             ),
-            SizedBox(height: 20),
           ],
         ),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    timer.cancel();
-    super.dispose();
   }
 }

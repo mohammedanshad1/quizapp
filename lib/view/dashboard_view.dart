@@ -4,6 +4,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:quizapp/model/question_model.dart';
 import 'package:quizapp/view/login_view.dart';
 import 'package:quizapp/view/quiz_view.dart';
+import 'package:quizapp/widgets/custom_button.dart';
 
 class DashboardScreen extends StatelessWidget {
   final List<Question> questions;
@@ -11,12 +12,15 @@ class DashboardScreen extends StatelessWidget {
   DashboardScreen({required this.questions});
 
   int get totalQuestions => questions.length;
-  int get answeredQuestions => questions.where((q) => q.selectedAnswer != null).length;
+  int get answeredQuestions =>
+      questions.where((q) => q.selectedAnswer != null).length;
   int get skippedQuestions => questions.where((q) => q.isSkipped).length;
   int get correctAnswers => questions.where((q) {
-    if (q.selectedAnswer == null) return false;
-    return q.choices.firstWhere((c) => c.choiceText == q.selectedAnswer).isCorrect;
-  }).length;
+        if (q.selectedAnswer == null) return false;
+        return q.choices
+            .firstWhere((c) => c.choiceText == q.selectedAnswer)
+            .isCorrect;
+      }).length;
 
   @override
   Widget build(BuildContext context) {
@@ -50,8 +54,8 @@ class DashboardScreen extends StatelessWidget {
                     _buildSummaryRow('Answered Questions', answeredQuestions),
                     _buildSummaryRow('Correct Answers', correctAnswers),
                     _buildSummaryRow('Skipped Questions', skippedQuestions),
-                    _buildSummaryRow('Accuracy', 
-                      '${((correctAnswers / totalQuestions) * 100).toStringAsFixed(1)}%'),
+                    _buildSummaryRow('Accuracy',
+                        '${((correctAnswers / totalQuestions) * 100).toStringAsFixed(1)}%'),
                   ],
                 ),
               ),
@@ -91,7 +95,8 @@ class DashboardScreen extends StatelessWidget {
                             ),
                             PieChartSectionData(
                               color: Colors.red,
-                              value: (answeredQuestions - correctAnswers).toDouble(),
+                              value: (answeredQuestions - correctAnswers)
+                                  .toDouble(),
                               title: 'Incorrect',
                               radius: 100,
                               titleStyle: TextStyle(
@@ -125,35 +130,35 @@ class DashboardScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                ElevatedButton.icon(
-                  onPressed: () {
+                // Retry Quiz Button (Green)
+                CustomButton(
+                  buttonName: 'Retry Quiz',
+                  onTap: () {
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(builder: (context) => QuizScreen()),
                     );
                   },
-                  icon: Icon(Icons.replay),
-                  label: Text('Retry Quiz'),
-                  style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-                  ),
+                  buttonColor: Colors.green, // Green color for retry
+                  height: 50, // Adjust height as needed
+                  width: 150, // Adjust width as needed
                 ),
-                ElevatedButton.icon(
-                  onPressed: () {
+
+                // Exit Button (Red)
+                CustomButton(
+                  buttonName: 'Exit',
+                  onTap: () {
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(builder: (context) => LoginScreen()),
                     );
                   },
-                  icon: Icon(Icons.exit_to_app),
-                  label: Text('Exit'),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.red,
-                    padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-                  ),
+                  buttonColor: Colors.red, // Red color for exit
+                  height: 50, // Adjust height as needed
+                  width: 150, // Adjust width as needed
                 ),
               ],
-            ),
+            )
           ],
         ),
       ),
